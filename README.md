@@ -7,7 +7,7 @@
 This repo contains the samples that demonstrate the API usage patterns for the Universal Windows Platform (UWP) in the Windows Software Development Kit (SDK) for Windows 10. These code samples were created with the Universal Windows Platform templates available in Visual Studio, and are designed to run on desktop, mobile, and future devices that support the Universal Windows Platform.
 
 > **Note:** If you are unfamiliar with Git and GitHub, you can download the entire collection as a 
-> [ZIP file](https://github.com/Microsoft/Windows-universal-samples/archive/master.zip), but be 
+> [ZIP file](https://github.com/Microsoft/Windows-universal-samples/archive/main.zip), but be 
 > sure to unzip everything to access shared dependencies. For more info on working with the ZIP file, 
 > the samples collection, and GitHub, see [Get the UWP samples from GitHub](https://aka.ms/ovu2uq). 
 > For more samples, see the [Samples portal](https://aka.ms/winsamples) on the Windows Dev Center. 
@@ -26,7 +26,7 @@ Additionally, to stay on top of the latest updates to Windows and the developmen
 
 The easiest way to use these samples without using Git is to download the zip file containing the current version (using the following link or by clicking the "Download ZIP" button on the repo page). You can then unzip the entire archive and use the samples in Visual Studio.
 
-   [Download the samples ZIP](../../archive/master.zip)
+   [Download the samples ZIP](../../archive/main.zip)
 
    **Notes:** 
    * Before you unzip the archive, right-click it, select **Properties**, and then select **Unblock**.
@@ -147,7 +147,6 @@ For additional Windows samples, see [Windows on GitHub](http://microsoft.github.
  </tr>
  <tr>
   <td><a href="Samples/ContactPicker">Contact picker</a></td>
-  <td><a href="Samples/MyPeopleNotifications">My People notifications</a></td>
   <td><a href="Samples/UserDataAccountManager">UserDataAccountManager</a></td>
  </tr>
 </table>
@@ -225,10 +224,11 @@ For additional Windows samples, see [Windows on GitHub](http://microsoft.github.
  </tr>
  <tr>
   <td><a href="Samples/LowLatencyInput">Low latency input</a></td>
+  <td><a href="Samples/PenHaptics">Pen haptics</a></td>
   <td><a href="Samples/SimpleInk">Simple inking</a></td>
-  <td><a href="Samples/TouchKeyboard">Touch keyboard</a></td>
  </tr>
  <tr>
+  <td><a href="Samples/TouchKeyboard">Touch keyboard</a></td>
   <td><a href="Samples/TouchKeyboardTextInput">Touch keyboard text input</a></td>
  </tr>
 </table>
@@ -308,31 +308,35 @@ For additional Windows samples, see [Windows on GitHub](http://microsoft.github.
  </tr>
  <tr>
   <td><a href="Samples/IoT-I2C">Inter-Integrated Circuit (I2C)</a></td>
+  <td><a href="Samples/LampArray">Lamp array</a></td>
   <td><a href="Samples/LampDevice">Lamp device</a></td>
-  <td><a href="Samples/LightSensor">Light sensor</a></td>
  </tr>
  <tr>
+  <td><a href="Samples/LightSensor">Light sensor</a></td>
   <td><a href="Samples/LineDisplay">Line display</a></td>
   <td><a href="Samples/Magnetometer">Magnetometer</a></td>
-  <td><a href="Samples/MagneticStripeReader">Magnetic stripe reader</a></td>
  </tr>
  <tr>
+  <td><a href="Samples/MagneticStripeReader">Magnetic stripe reader</a></td>
   <td><a href="Samples/Nfc">Near field communication (NFC)</a></td>
   <td><a href="Samples/NfcProvisioner">NFC enterprise provisioner</a></td>
-  <td><a href="Samples/OrientationSensor">Orientation sensor</a></td>
  </tr>
  <tr>
+  <td><a href="Samples/OrientationSensor">Orientation sensor</a></td>
   <td><a href="Samples/Pedometer">Pedometer</a></td>
   <td><a href="Samples/PosPrinter">POS printer</a></td>
-  <td><a href="Samples/ProximitySensor">Proximity sensor</a></td>
  </tr>
  <tr>
+  <td><a href="Samples/PresenceSensor">Presence sensor</a></td>
+  <td><a href="Samples/ProximitySensor">Proximity sensor</a></td>
   <td><a href="Samples/RadialController">Radial controller</a></td>
+ </tr>
+ <tr>
   <td><a href="Samples/RelativeInclinometer">Relative inclinometer</a></td>
   <td><a href="Samples/SerialArduino">Serial Arduino</a></td>
+  <td><a href="Samples/IoT-SPI">Serial Peripheral Interface (SPI)</a></td>
  </tr>
  <tr>
-  <td><a href="Samples/IoT-SPI">Serial Peripheral Interface (SPI)</a></td>
   <td><a href="Samples/SimpleOrientationSensor">Simple orientation sensor</a></td>
  </tr>
 </table>
@@ -446,16 +450,17 @@ For additional Windows samples, see [Windows on GitHub](http://microsoft.github.
  <tr>
   <td><a href="Samples/Personalization">Lock screen personalization</a></td>
   <td><a href="Samples/MicrosoftPassport">Microsoft Passport and Windows Hello</a></td>
-  <td><a href="Samples/SmartCard">Smart cards</a></td>
+  <td><a href="Samples/PersonalDataEncryption">Personal Data Encryption</a></td>
  </tr>
  <tr>
+  <td><a href="Samples/SmartCard">Smart cards</a></td>
   <td><a href="Samples/UserInfo">User information</a></td>
   <td><a href="Samples/UserCertificateStore">UserCertificateStore</a></td>
-  <td><a href="Samples/UserConsentVerifier">UserConsentVerifier</a></td>
  </tr>
  <tr>
   <td><a href="Samples/WebAccountManagement">Web account management</a></td>
   <td><a href="Samples/WebAuthenticationBroker">WebAuthenticationBroker</a></td>
+  <td><a href="Samples/UserConsentVerifier">UserConsentVerifier</a></td>
  </tr>
 </table>
 
@@ -508,6 +513,11 @@ For additional Windows samples, see [Windows on GitHub](http://microsoft.github.
  <tr>
   <td><a href="Samples/Json">JSON</a></td>
   <td><a href="Samples/MobileBroadband">Mobile broadband</a></td>
+  <td><a href="Samples/MobileHotspot">Mobile hotspot</a></td>
+ </tr>
+ <tr>
+  <td><a href="Samples/NetworkConnectivity">Network connectivity</a></td>
+  <td><a href="Samples/OnDemandHotspot">On-Demand Wi-Fi hotspot</a></td>
   <td><a href="Samples/RadioManager">Radios</a></td>
  </tr>
  <tr>
