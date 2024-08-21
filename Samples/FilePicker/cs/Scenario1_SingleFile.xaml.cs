@@ -44,8 +44,7 @@ namespace SDKTemplate
             StorageFile file = await openPicker.PickSingleFileAsync();
             if (file != null)
             {
-                // The StorageFile has read/write access to the picked file.
-                // See the FileAccess sample for code that uses a StorageFile to read and write.
+                // Application now has read/write access to the picked file
                 OutputTextBlock.Text = "Picked photo: " + file.Name;
             }
             else

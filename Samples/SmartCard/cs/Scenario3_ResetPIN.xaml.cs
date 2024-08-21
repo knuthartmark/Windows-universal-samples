@@ -9,13 +9,14 @@
 //
 //*********************************************************
 
+using SDKTemplate;
 using System;
 using Windows.Devices.SmartCards;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace SDKTemplate
+namespace Smartcard
 {
     public sealed partial class Scenario3_ResetPIN : Page
     {

@@ -4,7 +4,14 @@
 //
 //*********************************************************
 
-#include "pch.h"
+#include <wrl.h>
+#include <winerror.h>
+#include <Windows.Foundation.h>
+#include <wrl\implements.h>
+#include <wrl\event.h>
+#include <windows.system.threading.h>
+
+#include "Microsoft.SDKSamples.Kitchen.h"
 
 using namespace Microsoft::WRL;
 using namespace Microsoft::WRL::Wrappers;

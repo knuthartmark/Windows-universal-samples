@@ -27,7 +27,7 @@ namespace SDKTemplate
             this.InitializeComponent();
         }
 
-        private void SaveCredential_Click(Object sender, RoutedEventArgs args)
+        private void SaveCredential()
         {
             var resource = InputResourceValue.Text;
             var userName = InputUserNameValue.Text;

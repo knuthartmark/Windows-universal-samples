@@ -3,7 +3,8 @@ page_type: sample
 languages:
 - csharp
 - cpp
-- cppwinrt
+- cppcx
+- vb
 products:
 - windows
 - windows-uwp
@@ -52,8 +53,7 @@ To obtain an insider copy of Windows 10, go to [Windows 10](http://insider.windo
 
 ## Samples
 
-* [RemoteSystems](/Samples/RemoteSystems)
-* [AppServices sample](/archived/AppServices/) for C++/CX and Visual Basic (archived)
+[RemoteSystems](/Samples/RemoteSystems)
 
 ## Reference
 

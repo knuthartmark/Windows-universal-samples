@@ -21,10 +21,7 @@ namespace SDKTemplate
     {
     public:
         Scenario1_Save();
-
-    internal:
-        void SaveCredential_Click(Platform::Object^, Platform::Object^);
-
+        void SaveCredential();
     private:
         MainPage^ rootPage = MainPage::Current;
     };

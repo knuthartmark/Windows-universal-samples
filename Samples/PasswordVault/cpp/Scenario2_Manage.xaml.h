@@ -21,11 +21,9 @@ namespace SDKTemplate
     {
     public:
         Scenario2_Manage();
-
-    internal:
-        void RetrieveCredentials_Click(Platform::Object^, Platform::Object^);
-        void RevealPasswords_Click(Platform::Object^, Platform::Object^);
-        void RemoveCredentials_Click(Platform::Object^, Platform::Object^);
+        void RetrieveCredentials();
+        void RevealPasswords();
+        void RemoveCredentials();
 
     private:
         MainPage^ rootPage = MainPage::Current;

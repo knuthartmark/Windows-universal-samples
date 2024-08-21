@@ -25,7 +25,7 @@ namespace SDKTemplate
     /// </summary>
     public sealed partial class KeepConnectionOpenScenario : Page
     {
-        private MainPage rootPage = MainPage.Current;
+        private MainPage rootPage;
         private AppServiceConnection connection;
 
         public KeepConnectionOpenScenario()
@@ -33,14 +33,9 @@ namespace SDKTemplate
             this.InitializeComponent();
         }
 
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            //Dispose the connection reference we're holding
-            if (connection != null)
-            {
-                connection.Dispose();
-                connection = null;
-            }
+            rootPage = MainPage.Current;
         }
 
         private async void OpenConnection_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -58,13 +53,6 @@ namespace SDKTemplate
             connection.PackageFamilyName = "Microsoft.SDKSamples.AppServicesProvider.CS_8wekyb3d8bbwe";
             connection.ServiceClosed += Connection_ServiceClosed;
             AppServiceConnectionStatus status = await connection.OpenAsync();
-
-            //"connection" may have been nulled out while we were awaiting.
-            if (connection == null)
-            {
-                rootPage.NotifyUser("Connection was closed", NotifyType.ErrorMessage);
-                return;
-            }
 
             //If the new connection opened successfully we're done here
             if (status == AppServiceConnectionStatus.Success)
@@ -91,7 +79,7 @@ namespace SDKTemplate
 
                     default:
                     case AppServiceConnectionStatus.Unknown:
-                        rootPage.NotifyUser("An unknown error occurred while we were trying to open an AppServiceConnection.", NotifyType.ErrorMessage);
+                        rootPage.NotifyUser("An unkown error occurred while we were trying to open an AppServiceConnection.", NotifyType.ErrorMessage);
                         break;
                 }
 
@@ -166,13 +154,6 @@ namespace SDKTemplate
             inputs.Add("minvalue", minValueInput);
             inputs.Add("maxvalue", maxValueInput);
             AppServiceResponse response = await connection.SendMessageAsync(inputs);
-
-            //"connection" may have been nulled out while we were awaiting.
-            if (connection == null)
-            {
-                rootPage.NotifyUser("Connection was closed", NotifyType.ErrorMessage);
-                return;
-            }
 
             //If the service responded display the message. We're done!
             if (response.Status == AppServiceResponseStatus.Success)

@@ -9,38 +9,77 @@
 //
 //*********************************************************
 
-using System;
-using Windows.Data.Json;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
+using SDKTemplate;
+using System;
+using System.Diagnostics;
+using Windows.Data.Json;
 
-namespace SDKTemplate
+namespace Json
 {
-    public sealed partial class Scenario1_ParseAndStringify : Page
+    /// <summary>
+    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class S1_ParseAndStringify : Page
     {
+        // A pointer back to the main page.  This is needed if you want to call methods in MainPage such
+        // as NotifyUser()
         MainPage rootPage = MainPage.Current;
 
-        User CurrentUser
-        {
-            get => (User)DataContext;
-            set => DataContext = value;
-        }
-
-        public Scenario1_ParseAndStringify()
+        public S1_ParseAndStringify()
         {
             this.InitializeComponent();
-            CurrentUser = new User(JsonInput.Text);
+        }
+
+        /// <summary>
+        /// Invoked when this page is about to be displayed in a Frame.
+        /// </summary>
+        /// <param name="e">Event data that describes how this page was reached.  The Parameter
+        /// property is typically used to configure the page.</param>
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            JsonInput.Text = "{\r\n" +
+                "  \"id\": \"1146217767\",\r\n" +
+                "  \"phone\": null,\r\n" +
+                "  \"name\": \"Satya Nadella\",\r\n" +
+                "  \"education\": [\r\n" +
+                "    {\r\n" +
+                "      \"school\": {\r\n" +
+                "        \"id\": \"204165836287254\",\r\n" +
+                "        \"name\": \"Contoso High School\"\r\n" +
+                "      },\r\n" +
+                "      \"type\": \"High School\"\r\n" +
+                "    },\r\n" +
+                "    {\r\n" +
+                "      \"school\": {\r\n" +
+                "        \"id\": \"116138758396662\",\r\n" +
+                "        \"name\": \"Contoso University\"\r\n" +
+                "      },\r\n" +
+                "      \"type\": \"College\"\r\n" +
+                "    }\r\n" +
+                "  ],\r\n" +
+                "  \"timezone\": -8,\r\n" +
+                "  \"verified\": true\r\n" +
+                "}";
+
+            rootPage.DataContext = new User();
         }
 
         private void Parse_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                CurrentUser = new User(JsonInput.Text);
+                rootPage.DataContext = new User(JsonInput.Text);
                 rootPage.NotifyUser("JSON string parsed successfully.", NotifyType.StatusMessage);
             }
-            catch (Exception ex) when (IsExceptionHandled(ex))
+            catch (Exception ex)
             {
+                if (!IsExceptionHandled(ex))
+                {
+                    throw ex;
+                }
             }
         }
 
@@ -48,30 +87,23 @@ namespace SDKTemplate
         {
             JsonInput.Text = "";
 
-            JsonInput.Text = CurrentUser.Stringify();
+            User user = rootPage.DataContext as User;
+            Debug.Assert(user != null);
+
+            JsonInput.Text = user.Stringify();
             rootPage.NotifyUser("JSON object serialized to string successfully.", NotifyType.StatusMessage);
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            CurrentUser.Education.Add(new School());
+            User user = rootPage.DataContext as User;
+            Debug.Assert(user != null);
+            user.Education.Add(new School());
             rootPage.NotifyUser("New row added.", NotifyType.StatusMessage);
-        }
-
-        private void DeleteSchool_Click(object sender, RoutedEventArgs e)
-        {
-            var school = (School)((FrameworkElement)sender).DataContext;
-            CurrentUser.Education.Remove(school);
         }
 
         private bool IsExceptionHandled(Exception ex)
         {
-            if (ex.HResult == unchecked((int)0x8000000E)) // E_ILLEGAL_METHOD_CALL
-            {
-                rootPage.NotifyUser("JSON did not match expected schema: " + ex.Message, NotifyType.ErrorMessage);
-                return true;
-            }
-
             JsonErrorStatus error = JsonError.GetJsonStatus(ex.HResult);
             if (error == JsonErrorStatus.Unknown)
             {

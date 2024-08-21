@@ -29,7 +29,7 @@ namespace SDKTemplate
             this.InitializeComponent();
         }
 
-        private void RetrieveCredentials_Click(Object sender, RoutedEventArgs args)
+        private void RetrieveCredentials()
         {
             var resource = InputResourceValue.Text;
             var userName = InputUserNameValue.Text;
@@ -101,7 +101,7 @@ namespace SDKTemplate
             }
         }
 
-        private void RevealPasswords_Click(Object sender, RoutedEventArgs args)
+        private void RevealPasswords()
         {
             IList<Object> selectedItems = RetrievedCredentials.SelectedItems;
             if (selectedItems.Count > 0)
@@ -140,7 +140,7 @@ namespace SDKTemplate
             }
         }
 
-        private void RemoveCredentials_Click(Object sender, RoutedEventArgs args)
+        private void RemoveCredentials()
         {
             IList<object> selectedItems = RetrievedCredentials.SelectedItems;
             if (selectedItems.Count > 0)

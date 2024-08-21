@@ -35,18 +35,6 @@ short Convert<short>(double Value)
     return (short)(Value * _I16_MAX);
 };
 
-// 24-bit value stored in the upper bits of a 32-bit integer.
-struct int24in32
-{
-    int value;
-};
-template<>
-int24in32 Convert<int24in32>(double Value)
-{
-    constexpr int _I24_MAX = (1 << 23) - 1;
-    return { (int)(Value * _I24_MAX) << 8 };
-};
-
 //
 //  ToneSampleGenerator()
 //
@@ -96,14 +84,10 @@ HRESULT ToneSampleGenerator::GenerateSampleBuffer( DWORD Frequency, UINT32 Frame
             return E_OUTOFMEMORY;
         }
 
-        switch(GetRenderSampleType( wfx ) )
+        switch( CalculateMixFormatType( wfx ) )
         {
         case RenderSampleType::SampleType16BitPCM:
             GenerateSineSamples<short>( SampleBuffer->Buffer, SampleBuffer->BufferSize, Frequency, wfx->nChannels, wfx->nSamplesPerSec, TONE_AMPLITUDE, &theta);
-            break;
-
-        case RenderSampleType::SampleType24in32BitPCM:
-            GenerateSineSamples<int24in32>(SampleBuffer->Buffer, SampleBuffer->BufferSize, Frequency, wfx->nChannels, wfx->nSamplesPerSec, TONE_AMPLITUDE, &theta);
             break;
 
         case RenderSampleType::SampleTypeFloat:
@@ -178,7 +162,6 @@ HRESULT ToneSampleGenerator::FillSampleBuffer( UINT32 BytesToRead, BYTE *Data )
     CopyMemory( Data, SampleBuffer->Buffer, BytesToRead );
 
     m_SampleQueue = m_SampleQueue->Next;
-    SAFE_DELETE(SampleBuffer);
 
     return S_OK;
 }

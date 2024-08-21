@@ -44,8 +44,7 @@ namespace winrt::SDKTemplate::implementation
         {
             std::wstringstream output;
             output << L"Picked files:" << std::endl;
-            // The StorageFile have read/write access to the picked files.
-            // See the FileAccess sample for code that uses a StorageFile to read and write.
+            // Application now has read/write access to the picked file(s)
             for (StorageFile const& file : files)
             {
                 output << std::wstring_view{ file.Name() } << std::endl;                

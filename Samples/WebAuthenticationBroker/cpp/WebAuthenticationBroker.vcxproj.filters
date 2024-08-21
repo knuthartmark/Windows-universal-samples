@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(SharedContentDir)\cpp\MainPage.xaml" />
+    <Page Include="Scenario1_oAuthGoogle.xaml" />
     <Page Include="Scenario2_oAuthFacebook.xaml" />
     <Page Include="$(SharedContentDir)\xaml\Styles.xaml">
       <Filter>Styles</Filter>

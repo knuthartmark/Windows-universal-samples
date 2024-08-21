@@ -1,4 +1,4 @@
-//*********************************************************
+﻿//*********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -11,25 +11,32 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using SDKTemplate;
 using System;
 using Windows.Storage;
 
-namespace SDKTemplate
+namespace ApplicationDataSample
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Scenario3_SettingContainer : Page
+    public sealed partial class SettingContainer : Page
     {
+        // A pointer back to the main page.  This is needed if you want to call methods in MainPage such
+        // as NotifyUser()
         MainPage rootPage = MainPage.Current;
-        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+        ApplicationDataContainer localSettings = null;
 
         const string containerName = "exampleContainer";
         const string settingName = "exampleSetting";
 
-        public Scenario3_SettingContainer()
+        public SettingContainer()
         {
-            InitializeComponent();
+            this.InitializeComponent();
+
+            localSettings = ApplicationData.Current.LocalSettings;
+
+            DisplayOutput();
         }
 
         void CreateContainer_Click(Object sender, RoutedEventArgs e)
@@ -48,32 +55,44 @@ namespace SDKTemplate
 
         void WriteSetting_Click(Object sender, RoutedEventArgs e)
         {
-            localSettings.Containers[containerName].Values[settingName] = "Hello World"; // example value
+            if (localSettings.Containers.ContainsKey(containerName))
+            {
+                localSettings.Containers[containerName].Values[settingName] = "Hello World"; // example value
+            }
 
             DisplayOutput();
         }
 
         void DeleteSetting_Click(Object sender, RoutedEventArgs e)
         {
-            localSettings.Containers[containerName].Values.Remove(settingName);
+            if (localSettings.Containers.ContainsKey(containerName))
+            {
+                localSettings.Containers[containerName].Values.Remove(settingName);
+            }
 
             DisplayOutput();
         }
 
         void DisplayOutput()
         {
-            bool hasContainer = localSettings.Containers.TryGetValue(containerName, out ApplicationDataContainer container);
-            bool hasSetting = hasContainer ? container.Values.ContainsKey(settingName) : false;
+            bool hasContainer = localSettings.Containers.ContainsKey(containerName);
+            bool hasSetting = hasContainer ? localSettings.Containers[containerName].Values.ContainsKey(settingName) : false;
 
-            OutputTextBlock.Text = $"Container Exists: {hasContainer}\nSetting Exists: {hasSetting}";
+            String output = String.Format("Container Exists: {0}\n" +
+                                          "Setting Exists: {1}",
+                                          hasContainer ? "true" : "false",
+                                          hasSetting ? "true" : "false");
 
-            WriteSetting.IsEnabled = hasContainer;
-            DeleteSetting.IsEnabled = hasContainer;
+            OutputTextBlock.Text = output;
         }
 
+        /// <summary>
+        /// Invoked when this page is about to be displayed in a Frame.
+        /// </summary>
+        /// <param name="e">Event data that describes how this page was reached.  The Parameter
+        /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            DisplayOutput();
         }
     }
 }

@@ -2,8 +2,7 @@
 page_type: sample
 languages:
 - csharp
-- cpp
-- cppwinrt
+- vb
 products:
 - windows
 - windows-uwp
@@ -38,41 +37,41 @@ Shows how to store and retrieve data that is specific to each user and app by us
 Application data includes session state, user preferences, and other settings. It is created, read, updated, and deleted when the app is running. The operating system manages these data stores for your app: 
 
 - local: Data that exists on the current device and is backed up in the cloud 
+- roaming: Data that exists on all devices on which the user has installed the app 
 - temporary: Data that could be removed by the system any time the app isn't running 
 - localcache: Persistent data that exists only on the current device 
 
-If you use local data in your app, your users can back up application data in the cloud. This application data can then be restored back on any other device while setting up the device with the same account.
+If you use roaming data in your app, your users can easily keep your app's application data in sync across multiple devices. The operating system replicates roaming data to the cloud when it is updated, and synchronizes the data to any other devices on which the app is installed, reducing the amount of setup work that the user needs to do to install your app on multiple devices. 
 
-The system also manages a roaming data store,
-but the data no longer roams starting in Windows 11.
+If you use local data in your app, your users can back up application data in the cloud. This application data can then be restored back on any other device while setting up the device with the same account.
 
 The sample covers these key tasks:
 
 - Reading and writing settings to an app data store 
 - Reading and writing files to an app data store 
+- Responding to roaming events 
 
-## Related topics
+## Guidelines 
 
-### Concepts
+[Guidelines for roaming application data](http://msdn.microsoft.com/library/windows/apps/hh465094)  
+
+## Concepts 
 
 [Store and retrieve settings and other app data](https://msdn.microsoft.com/library/windows/apps/mt299098)  
 
-### Related samples
-
-* [ApplicationData sample](/archived/ApplicationData/) for Visual Basic (archived)
-
-### Reference
+## Reference 
 
 [Windows.Storage.ApplicationData](http://msdn.microsoft.com/library/windows/apps/br241587)  
 [Windows.Storage.ApplicationDataCompositeValue](http://msdn.microsoft.com/library/windows/apps/br241588)  
 [Windows.Storage.ApplicationDataContainer](http://msdn.microsoft.com/library/windows/apps/br241599)  
 [Windows.Storage.ApplicationDataContainerSettings](http://msdn.microsoft.com/library/windows/apps/br241600)  
+[WinJS.Application](http://msdn.microsoft.com/library/windows/apps/br229774)  
 
 ## System requirements
 
 **Client:** Windows 10
 
-**Server:** Windows Server 2016
+**Server:** Windows Server 2016 Technical Preview
 
 **Phone:** Windows 10
 

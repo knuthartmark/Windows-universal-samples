@@ -68,28 +68,15 @@ Namespace Global.SDKTemplate
         End Sub
 
         Private Async Sub CreateTestFile()
-            Dim folder As StorageFolder = Await KnownFolders.GetFolderAsync(KnownFolderId.PicturesLibrary)
+            Dim folder As StorageFolder = Await KnownFolders.GetFolderForUserAsync(Nothing, KnownFolderId.PicturesLibrary) ' "Nothing" means current user
             Await folder.CreateFileAsync("Test " & Extension + " file." & Extension, CreationCollisionOption.ReplaceExisting)
             Await Windows.System.Launcher.LaunchFolderAsync(folder)
         End Sub
 
-        Private Async Sub CreateTestFileWithNoExtension()
-            Dim folder As StorageFolder = Await KnownFolders.GetFolderAsync(KnownFolderId.PicturesLibrary)
-            Await folder.CreateFileAsync("Test file with no extension", CreationCollisionOption.ReplaceExisting)
-            Await Windows.System.Launcher.LaunchFolderAsync(folder)
-        End Sub
-
-        Private Async Sub RemoveTestFiles()
-            Dim folder As StorageFolder = Await KnownFolders.GetFolderAsync(KnownFolderId.PicturesLibrary)
+        Private Async Sub RemoveTestFile()
+            Dim folder As StorageFolder = Await KnownFolders.GetFolderForUserAsync(Nothing, KnownFolderId.PicturesLibrary) ' "Nothing" means current user
             Try
                 Dim file As StorageFile = Await folder.GetFileAsync("Test " & Extension + " file." & Extension)
-                Await file.DeleteAsync()
-            Catch ex As Exception
-                ' File I/O errors are reported as exceptions.
-                ' Ignore errors here.
-            End Try
-            Try
-                Dim file As StorageFile = Await folder.GetFileAsync("Test file with no extension")
                 Await file.DeleteAsync()
             Catch ex As Exception
                 ' File I/O errors are reported as exceptions.

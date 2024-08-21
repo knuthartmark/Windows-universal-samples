@@ -101,7 +101,6 @@ namespace PrintSample
             printDocument.Paginate -= CreatePrintPreviewPages;
             printDocument.GetPreviewPage -= GetPrintPreviewPage;
             printDocument.AddPages -= AddPrintPages;
-            printDocument = null;
 
             // Remove the handler for printing initialization.
             PrintManager printMan = PrintManager.GetForCurrentView();

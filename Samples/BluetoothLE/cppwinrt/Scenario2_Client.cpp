@@ -309,7 +309,7 @@ namespace winrt::SDKTemplate::implementation
     {
         auto lifetime = get_strong();
 
-        auto selectedItem = CharacteristicList().SelectedItem().as<ComboBoxItem>();
+        auto selectedItem = ServiceList().SelectedItem().as<ComboBoxItem>();
         selectedCharacteristic = selectedItem ? selectedItem.Tag().as<GattCharacteristic>() : nullptr;
 
         if (selectedCharacteristic == nullptr)

@@ -44,8 +44,7 @@ namespace SDKTemplate
             StorageFolder folder = await folderPicker.PickSingleFolderAsync();
             if (folder != null)
             {
-                // The StorageFolder has read/write access to all contents in the picked folder (including other sub-folder contents).
-                // See the FileAccess sample for code that obtains a StorageFile from a StorageFolder to read and write.
+                // Application now has read/write access to all contents in the picked folder (including other sub-folder contents)
                 StorageApplicationPermissions.FutureAccessList.AddOrReplace("PickedFolderToken", folder);
                 OutputTextBlock.Text = "Picked folder: " + folder.Name;
             }

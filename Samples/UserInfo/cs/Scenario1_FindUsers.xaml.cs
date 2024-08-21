@@ -36,9 +36,23 @@ namespace SDKTemplate
             rootPage = MainPage.Current;
 
             // Populate the list of users.
-            var observableUsers = await MainPage.GetUserViewModelsAsync();
+            IReadOnlyList<User> users = await User.FindAllAsync();
+            var observableUsers = new ObservableCollection<UserViewModel>();
+            int userNumber = 1;
+            foreach (User user in users)
+            {
+                string displayName = (string)await user.GetPropertyAsync(KnownUserProperties.DisplayName);
+
+                // Choose a generic name if we do not have access to the actual name.
+                if (String.IsNullOrEmpty(displayName))
+                {
+                    displayName = "User #" + userNumber.ToString();
+                    userNumber++;
+                }
+                observableUsers.Add(new UserViewModel(user.NonRoamableId, displayName));
+            }
             UserList.DataContext = observableUsers;
-            if (observableUsers.Count > 0)
+            if (users.Count > 0)
             {
                 UserList.SelectedIndex = 0;
             }

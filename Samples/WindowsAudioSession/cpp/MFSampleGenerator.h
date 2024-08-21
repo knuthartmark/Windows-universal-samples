@@ -67,7 +67,7 @@ namespace SDKSample
                 HRESULT hr = E_NOINTERFACE;
                 *ppv = NULL;
 
-                if (riid == IID_IMFSourceReaderCallback || riid == IID_IUnknown)
+                if (riid == IID_IMFSourceReaderCallback)
                 {
                     *ppv = static_cast<IMFSourceReaderCallback *>(this);
                     ((IUnknown*) *ppv)->AddRef();

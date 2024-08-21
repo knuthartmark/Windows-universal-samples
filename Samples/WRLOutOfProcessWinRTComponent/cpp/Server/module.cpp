@@ -4,7 +4,9 @@
 //
 //*********************************************************
 
-#include "pch.h"
+#include <wrl\module.h>
+#include <roapi.h>
+#include <Windows.ApplicationModel.Core.h>
 
 using namespace ABI::Windows::ApplicationModel::Core;
 using namespace ABI::Windows::Foundation;

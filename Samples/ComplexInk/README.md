@@ -56,14 +56,11 @@ To obtain information about Windows 10 development, go to the [Windows Dev Cente
 To obtain information about Microsoft Visual Studio and the tools for developing Windows apps, go to [Visual Studio](http://go.microsoft.com/fwlink/?LinkID=532422)
 
 ## Related topics
+--------------
 
 [Getting started with apps](http://msdn.microsoft.com/library/windows/apps/)  
 
-### Samples
-
-[Pen haptics](/Samples/PenHaptics)
-
-### Reference
+## Reference
 
 [Windows.UI.Input.Inking](http://msdn.microsoft.com/library/windows/apps/br208524)  
 

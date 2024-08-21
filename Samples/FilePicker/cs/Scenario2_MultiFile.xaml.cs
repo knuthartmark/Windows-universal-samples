@@ -45,8 +45,7 @@ namespace SDKTemplate
             if (files.Count > 0)
             {
                 StringBuilder output = new StringBuilder("Picked files:\n");
-                // The StorageFiles have read/write access to the picked files.
-                // See the FileAccess sample for code that uses a StorageFile to read and write.
+                // Application now has read/write access to the picked file(s)
                 foreach (StorageFile file in files)
                 {
                     output.Append(file.Name + "\n");

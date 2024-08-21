@@ -32,5 +32,3 @@
 #include <mfidl.h>
 #include <mfapi.h>
 #include <mfreadwrite.h>
-
-#include <iterator>

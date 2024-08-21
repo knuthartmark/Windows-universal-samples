@@ -3,6 +3,8 @@ page_type: sample
 languages:
 - csharp
 - cpp
+- cppcx
+- vb
 - cppwinrt
 products:
 - windows
@@ -93,7 +95,7 @@ To obtain information about Microsoft Visual Studio and the tools for developing
 
 ### Related samples
 
-* [BarcodeScanner sample](/archived/BarcodeScanner/) for JavaScript, Visual Basic, and C++/CX (archived)
+* [BarcodeScanner sample](/archived/BarcodeScanner/) for JavaScript (archived)
 
 ## System requirements
 

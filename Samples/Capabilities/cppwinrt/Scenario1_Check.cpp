@@ -21,7 +21,6 @@ using namespace winrt::Windows::Security::Authorization::AppCapabilityAccess;
 using namespace winrt::Windows::System;
 using namespace winrt::Windows::UI::Xaml;
 using namespace winrt::Windows::UI::Xaml::Navigation;
-using namespace std::literals::chrono_literals;
 
 namespace winrt::SDKTemplate::implementation
 {
@@ -54,7 +53,7 @@ namespace winrt::SDKTemplate::implementation
         UpdateCapabilityStatus();
     }
 
-    fire_and_forget Scenario1_Check::StreamLocationButton_Click(IInspectable const&, RoutedEventArgs const&)
+    fire_and_forget Scenario1_Check::RequestAccessButton_Click(IInspectable const&, RoutedEventArgs const&)
     {
         auto lifetime = get_strong();
 
@@ -63,7 +62,6 @@ namespace winrt::SDKTemplate::implementation
         case AppCapabilityAccessStatus::Allowed:
             // Access was already granted.
             // AccessChanged event will trigger a recalc.
-            co_await StreamLocationAsync();
             break;
 
         case AppCapabilityAccessStatus::UserPromptRequired:
@@ -73,7 +71,6 @@ namespace winrt::SDKTemplate::implementation
             {
                 // The user granted access.
                 // AccessChanged event will trigger a recalc.
-                co_await StreamLocationAsync();
             }
             break;
 
@@ -84,10 +81,11 @@ namespace winrt::SDKTemplate::implementation
             // or explain why access is denied.
             co_await Launcher::LaunchUriAsync(Uri(L"ms-settings:privacy-location"));
             break;
+
         }
     }
 
-    IAsyncAction Scenario1_Check::StreamLocationAsync()
+    IAsyncAction Scenario1_Check::ShowLocationAsync()
     {
         auto lifetime = get_strong();
 
@@ -96,33 +94,19 @@ namespace winrt::SDKTemplate::implementation
             // Need try/catch because we can lose geolocator access at any time.
             try
             {
-                // Specify a message to explain to the user why we are tracking their location.
-                locationCapability.DisplayMessage(winrt::hstring(L"Streaming location"));
-
-                LocationTextBlock().Text(L"Finding your current location...");
+                LocationTextBlock().Text(L"Calculating current location...");
                 Geolocator geolocator;
-
-                for (int i = 0; i < 4; i++)
+                Geoposition pos = co_await geolocator.GetGeopositionAsync();
+                if (pos == nullptr)
                 {
-                    Geoposition pos = co_await geolocator.GetGeopositionAsync();
-
-                    if (pos == nullptr)
-                    {
-                        LocationTextBlock().Text(L"Current location unknown.");
-                    }
-                    else
-                    {
-                        std::wostringstream output;
-                        output << L"Your location is: Latitude " << pos.Coordinate().Point().Position().Latitude <<
-                            L", Longitude" << pos.Coordinate().Point().Position().Longitude;
-                        LocationTextBlock().Text(output.str());
-                    }
-
-                    co_await winrt::resume_after(500ms);
-                    co_await resume_foreground(Dispatcher());
-
-                    // You can change the message as your app's usage changes.
-                    locationCapability.DisplayMessage(L"Tracking your current location...");
+                    LocationTextBlock().Text(L"Current location unknown.");
+                }
+                else
+                {
+                    std::wostringstream output;
+                    output << L"Approximate location is Latitude " << pos.Coordinate().Point().Position().Latitude <<
+                        L", Longitude" << pos.Coordinate().Point().Position().Longitude;
+                    LocationTextBlock().Text(output.str());
                 }
             }
             catch (hresult_access_denied const&)
@@ -130,13 +114,6 @@ namespace winrt::SDKTemplate::implementation
                 // Lost access in the middle of the operation.
                 // AccessChanged event will trigger a recalc.
             }
-
-            LocationTextBlock().Text(L"");
-
-            // Even though we clear the message immediately, it will take time before the message
-            // disappear from the system. The system has a minimum display time for the message,
-            // so that users can observe brief usage.
-            locationCapability.DisplayMessage(L"");
         }
         else
         {
@@ -145,15 +122,16 @@ namespace winrt::SDKTemplate::implementation
         }
     }
 
-    void Scenario1_Check::UpdateCapabilityStatus()
+    fire_and_forget Scenario1_Check::UpdateCapabilityStatus()
     {
         auto lifetime = get_strong();
 
         AppCapabilityAccessStatus status = locationCapability.CheckAccess();
         if (status == AppCapabilityAccessStatus::Allowed)
         {
-            LocationAccessBlock().Visibility(Visibility::Collapsed);
             LocationTextBlock().Visibility(Visibility::Visible);
+            RequestAccessButton().Visibility(Visibility::Collapsed);
+            co_await ShowLocationAsync();
         }
         else
         {
@@ -164,27 +142,25 @@ namespace winrt::SDKTemplate::implementation
             case AppCapabilityAccessStatus::NotDeclaredByApp:
                 // The app neglected to declare the capability in its manifest.
                 // This is a developer error.
-                LocationAccessBlock().Text(L"App misconfiguration error. Contact vendor for support.");
-                LocationAccessBlock().Visibility(Visibility::Visible);
+                RequestAccessButton().Visibility(Visibility::Collapsed);
+                rootPage.NotifyUser(L"App misconfiguration error. Contact vendor for support.", NotifyType::ErrorMessage);
                 break;
 
             default:
             case AppCapabilityAccessStatus::DeniedBySystem:
                 // We can send the user to the Settings page to obtain access
                 // or at least explain why access is denied.
-                LocationAccessBlock().Text(L"The system has blocked access to location.");
-                LocationAccessBlock().Visibility(Visibility::Visible);
+                RequestAccessButton().Visibility(Visibility::Visible);
                 break;
 
             case AppCapabilityAccessStatus::DeniedByUser:
                 // We can send the user to the Settings page to obtain access.
-                LocationAccessBlock().Text(L"You must enable location access in Settings.");
-                LocationAccessBlock().Visibility(Visibility::Visible);
+                RequestAccessButton().Visibility(Visibility::Visible);
                 break;
 
             case AppCapabilityAccessStatus::UserPromptRequired:
                 // We can prompt the user to give us access.
-                LocationAccessBlock().Visibility(Visibility::Collapsed);
+                RequestAccessButton().Visibility(Visibility::Visible);
                 break;
             }
         }

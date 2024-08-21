@@ -40,8 +40,7 @@ namespace winrt::SDKTemplate::implementation
         StorageFile file = co_await openPicker.PickSingleFileAsync();
         if (file != nullptr)
         {
-            // The StorageFile has read/write access to the picked file.
-            // See the FileAccess sample for code that uses a StorageFile to read and write.
+            // Application now has read/write access to the picked file
             OutputTextBlock().Text(L"Picked photo: " + file.Name());
         }
         else

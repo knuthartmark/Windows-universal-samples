@@ -1,11 +1,13 @@
-﻿using System;
+﻿using SDKTemplate;
+
+using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.Storage.Streams;
 using Windows.Security.Cryptography;
 using Windows.Devices.SmartCards;
 
-namespace SDKTemplate
+namespace Smartcard
 {
     public sealed partial class Scenario8_TransmitAPDU : Page
     {

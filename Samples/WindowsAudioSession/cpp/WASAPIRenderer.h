@@ -91,7 +91,6 @@ namespace SDKSample
             HRESULT OnAudioSampleRequested( Platform::Boolean IsSilence = false );
             HRESULT ConfigureSource();
             UINT32 GetBufferFramesPerPeriod();
-            HRESULT SetAudioClientChannelVolume();
 
             HRESULT GetToneSample( UINT32 FramesAvailable );
             HRESULT GetMFSample( UINT32 FramesAvailable );
@@ -108,7 +107,6 @@ namespace SDKSample
             UINT32                  m_FundamentalPeriodInFrames;
             UINT32                  m_MaxPeriodInFrames;
             UINT32                  m_MinPeriodInFrames;
-            float                   m_ChannelVolume;
 
             IAudioClient3          *m_AudioClient;
             IAudioRenderClient     *m_AudioRenderClient;
